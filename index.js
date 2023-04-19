@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const request = require('request');
@@ -13,6 +14,7 @@ app.use(
     extended: true,
   })
 );
+
 
 app.post('/', (req, res) => {
   let firstName = req.body.firstName;
@@ -32,13 +34,14 @@ app.post('/', (req, res) => {
       },
     ],
   };
+
   let jsonData = JSON.stringify(data);
 
   const url = 'https://us21.api.mailchimp.com/3.0/lists/3c4b05276d';
 
   const options = {
     method: 'POST',
-    auth: 'dave:1e46acdffe0aaa9552835ae9586dda82-us21',
+    auth: 'dave:'+ process.env.API_KEY,
   };
 
 
@@ -74,11 +77,6 @@ app.listen(port, () => {
   console.log(`listening on port:${port}...`);
 });
 
-// api key
-// 1e46acdffe0aaa9552835ae9586dda82-us21
-
-// list id
-// 3c4b05276d
 
 // Export the Express API
 module.exports = app;
